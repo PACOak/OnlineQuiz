@@ -1,0 +1,182 @@
+<!--Andrew Kaehler-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Test</title>
+</head>
+
+<body>
+
+	<p id="timer"></p>
+	<h1>Online Test</h1>
+
+	<p>Question1: How many periods per week do we have with Guido?</p>
+	<p><input type="text" id="q1answer" /><span id="q1correct"></span></p>
+	
+	<p>Question2: How many periods per week do we have with Joiner?</p>
+	<p><input type="text" id="q2answer" /><span id="q2correct"></span></p>
+	
+	<p>Question3: 2 + 2 =</p>
+	<p><input type="text" id="q3answer" /><span id="q3correct"></span></p>
+	
+	<p>Question4: 4 * 2 =</p>
+	<p><input type="text" id="q4answer" /><span id="q4correct"></span></p>
+	
+	<p>Question5: 2 * 5 =</p>
+	<p><input type="text" id="q5answer" /><span id="q5correct"></span></p>
+	
+	<button onclick="gradeTest();" id="btnGradeTest">Grade My Test</button>
+	
+	<p id="points"></p>
+	
+	<script>
+		
+		//convert to minutes and seconds
+		function minutes(amount){
+			var minute = Math.floor(amount / 60);
+			var second = amount % 60;
+			var time;
+			if (second < 10){
+				time = minute + ":0" + second;
+			}
+			else{
+				time = minute + ":" + second;
+			}
+			return time;
+		}
+		
+		//set time interval and time left
+		var timeStart = 30;
+		var timeLeft = setInterval(function(){timer()},1000);
+		document.getElementById("timer").innerHTML = minutes(timeStart);
+		
+		//keep time
+		function timer(){
+			if (timeStart!=0){
+				timeStart -= 1;
+				document.getElementById("timer").innerHTML = minutes(timeStart);
+			}
+			else if (timeStart <= 0){
+				gradeTest();				
+				document.getElementById("timer").innerHTML = "TIME'S UP!!";
+			}
+		}
+		
+		
+		
+		//do when answer is wrong
+		function whenWrong(answer){
+			document.getElementById(answer).style.setProperty("text-decoration", "line-through");
+			document.getElementById(answer).style.setProperty("background-color", "red");
+		}
+		
+		//do when answer is correct
+		function whenRight(answer){
+			document.getElementById(answer).style.setProperty("background-color", "green");
+		}
+		
+		//returns the letter grade
+		function letterGrade(point){
+			var lett;
+			if (point === 5){
+				lett = "A";
+			}
+			else if (point === 4){
+				lett = "B";
+			}
+			else if (point === 3){
+				lett = "D";
+			}
+			else{
+				lett = "F";
+			}
+			return lett;
+		}
+		
+		//grade test
+		var gradeTest = function()
+		{
+			
+			//sets all answers to lowercase
+			var points = 0;
+			var q1 = document.getElementById("q1answer").value.toLowerCase();
+			var q2 = document.getElementById("q2answer").value.toLowerCase();
+			var q3 = document.getElementById("q3answer").value.toLowerCase();
+			var q4 = document.getElementById("q4answer").value.toLowerCase();
+			var q5 = document.getElementById("q5answer").value.toLowerCase();
+			var answer1 = "14";
+			var answer2 = "5";
+			var answer3 = "4";
+			var answer4 = "8";
+			var answer5 = "10";
+			//question 1
+			if (q1 === "14")
+			{
+				whenRight("q1answer");
+				points += 1;
+			}
+			else
+			{
+				whenWrong("q1answer");
+				document.getElementById("q1correct").innerHTML = (answer1);
+			}
+			
+			//question 2
+			if (q2 === "5")
+			{
+				whenRight("q2answer");
+				points += 1;
+			}
+			else
+			{
+				whenWrong("q2answer");
+				document.getElementById("q2correct").innerHTML = (answer2);
+			}
+			
+			//question 3
+			if (q3 === "4")
+			{
+				whenRight("q3answer");
+				points += 1;
+			}
+			else
+			{
+				whenWrong("q3answer");
+				document.getElementById("q3correct").innerHTML = (answer3);
+			}
+			
+			//question 4
+			if (q4 === "8")
+			{
+				whenRight("q4answer");
+				points += 1;
+			}
+			else
+			{
+				whenWrong("q4answer");
+				document.getElementById("q4correct").innerHTML = (answer4);
+			}
+			
+			//question 5
+			if (q5 === "10")
+			{
+				whenRight("q5answer");
+				points += 1;
+			}
+			else
+			{
+				whenWrong("q5answer");
+				document.getElementById("q5correct").innerHTML = (answer5);
+			}
+			
+			
+			//add lettergrade and correct answers
+			var letter = letterGrade(points);
+			document.getElementById("points").innerHTML = "You got " + points + " correct. | Letter Grade: " + letter;
+		}
+	</script>
+</body>
+
+</html>
